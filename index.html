@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration Form</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e0e0e0;
+}
+
+.big-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container {
+    width: 40%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+}
+.liste-container {
+    width: 86%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+}
+.title {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+img{
+width: 200px;
+}
+.form-group, .form-actions {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #f44336; /* Pokeball red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 5px;
+}
+
+button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+.actions button, .form-actions button[type="submit"] {
+    background-color: #4caf50; /* Pokeball green */
+}
+
+.actions button:hover, .form-actions button[type="submit"]:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f44336; /* Pokeball red */
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .big-container {
+        flex-direction: column;
+    }
+    .container, .liste-container {
+        flex-basis: 100%;
+    }
+}
+
+/* Add additional custom styles as needed */
+    </style>
+    
+</head>
+<body>
+<div class="big-container">
+<div class="container">
+    <div class="title">
+        <img src="./public/pokeball.png" alt="pokeball" srcset="">
+        <h2>Inscription</h2>
+    </div>
+    <form id="form-group">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required>
+        
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" name="prenom" required>
+        
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required>
+        
+        <label for="naissance">Naissance:</label>
+        <input type="date" id="naissance" name="naissance">
+        
+        <label for="sexe">Sexe:</label>
+        <select id="sexe" name="sexe">
+            <option value="male">Masculin</option>
+            <option value="female">Féminin</option>
+        </select>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <label for="ligue">Ligue:</label>
+        <select name="ligue" id="ligue">
+            <option value="junior">Junior</option>
+            <option value="senior">Senior</option>
+            <option value="master">Master</option>
+        </select>
+        
+        <div class="form-actions">
+            <button type="submit">Ajouter</button>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="title">
+        <img src="./public/badge.png" alt="pokeball" srcset="">
+        <h2>Récompenses</h2>
+    </div>
+    <form id="form-actions">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date">
+        
+        <label for="points">Points:</label>
+        <select id="points" name="points">
+            <option value="pts">Points</option>
+            <!-- Add other options as needed -->
+        </select>
+        
+        <label for="boosters">Boosters:</label>
+        <select id="boosters" name="boosters">
+            <option value="boosters">Boosters</option>
+            <!-- Add other options as needed -->
+        </select>
+        
+        <label for="note">Note:</label>
+        <textarea id="note" name="note"></textarea>
+        
+        <div class="actions">
+            <button type="submit">Récompenser</button>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <div class="title">
+        <img src="./public/card.png" alt="pokeball" srcset="">
+        <h2>Tableau de cartes</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic rows will be inserted here -->
+        </tbody>
+    </table>
+    <button type="button">Ajouter</button>
+    <!-- Input for "nombres de boosters" -->
+    <div class="form-group">
+        <label for="boosters-count">Nombres de boosters:</label>
+        <input type="text" id="boosters-count" name="boosters">
+    </div>
+</div>
+
+<!-- Container for "liste des recommandations" -->
+<div class="container">
+    <h2>Liste des recommandations</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Présence</th>
+                <th>Booster</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic rows will be inserted here -->
+        </tbody>
+    </table>
+    <button type="button">Ajouter</button>
+</div>
+<div class="liste-container">
+    <div class="title">
+        <img src="./public/list.png" alt="pokeball" srcset="">
+        <h2>Liste des joueurs</h2>
+    </div>
+    <div class="search-add-bar">
+        <input type="search" placeholder="Recherche" aria-label="Recherche">
+        <button type="button">Ajouter</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>ID</th>
+                <th>Pts</th>
+                <th>Présence</th>
+                <th>Catégorie</th>
+                <th>Sexe</th>
+                <th>Email</th>
+                <th>Ligue</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="liste-des-joueurs">
+            <!-- Dynamic rows will be inserted here -->
+        </tbody>
+    </table>
+</div>
+</div>
+<!-- Your custom script -->
+<script type="module" src="./src/supabase.js">
+    
+</script>
+
+
+
+
+</body>
+</html>

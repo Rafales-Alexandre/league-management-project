@@ -1,10 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://cnrdhnfpkohxdxrybign.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNucmRobmZwa29oeGR4cnliaWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI0MDY3OTcsImV4cCI6MjAxNzk4Mjc5N30.f3DTvL-u7CqV_uJHM_ecbXNJm6z3Uo0T--KvpTDTV1k'; // This should be your anon/public key, not the service role key or password
+import autoComplete from "@tarekraafat/autocomplete.js";
+import supabase from "../supabaseConfig.js"
+// Function to check if a player with the same ID exists
+async function doesPlayerExist(playerId) {
+    const { data, error } = await supabase
+        .from('players')
+        .select('id')
+        .eq('trainerId', playerId);
 
-const supabase = createClient(supabaseUrl, supabaseKey);
-// Example function to add a player
+    if (error) {
+        console.error('Error checking player existence', error);
+        return false;
+    }
+
+    return data.length > 0; // Returns true if a player with the same ID exists
+}
+
 async function addPlayer(playerData) {
+    const playerId = playerData.trainerId;
+    console.log(playerId)
+
+    // Check if the player already exists
+    const playerExists = await doesPlayerExist(playerId);
+
+    if (playerExists) {
+        console.error('Player with the same ID already exists');
+        return;
+    }
+
     const { data, error } = await supabase
         .from('players')
         .insert([playerData]);
@@ -15,13 +37,47 @@ async function addPlayer(playerData) {
     }
 
     console.log('Added player', data);
-    const players = await fetchPlayers();
+    const players = await fetchLeaguePlayer();
     updatePlayerTable(players);
 }
 
-// Add event listener to your form
-document.getElementById('form-group').addEventListener('submit', function(e) {
+async function addLeaguePlayer(playerData) {
+    const playerId = playerData.trainerId;
+
+    // Check if the player already exists
+    const playerExists = await doesPlayerExist(playerId);
+
+    if (playerExists) {
+        console.error('Player with the same ID already exists');
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from('league_players')
+        .insert([playerData]);
+
+    if (error) {
+        console.error('Error inserting data', error);
+        return;
+    }
+
+    console.log('Added player', data);
+    const players = await fetchLeaguePlayer();
+    updatePlayerTable(players);
+}
+
+document.getElementById('form-group').addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    const playerId = document.getElementById('id').value;
+
+    // Check if the player already exists
+    const playerExists = await doesPlayerExist(playerId);
+
+    if (playerExists) {
+        console.error('Player with the same ID already exists');
+        return;
+    }
 
     const playerData = {
         nom: document.getElementById('nom').value,
@@ -30,14 +86,13 @@ document.getElementById('form-group').addEventListener('submit', function(e) {
         sexe: document.getElementById('sexe').value,
         email: document.getElementById('email').value,
         ligue: document.getElementById('ligue').value,
-        trainerId: document.getElementById('id').value,
-        
-        
+        trainerId: playerId,
     };
 
     addPlayer(playerData);
+    addLeaguePlayer(playerData);
 });
-console.log(supabase)
+
 async function fetchPlayers() {
     const { data, error } = await supabase
         .from('players')
@@ -50,9 +105,71 @@ async function fetchPlayers() {
 
     return data;
 }
+
+async function fetchLeaguePlayer(){
+    const { data, error } = await supabase
+        .from('league_players')
+        .select('*'); 
+
+    if (error) {
+        console.error('Error fetching data', error);
+        return;
+    }
+
+    return data;
+}
+
+let playersList = [];
+
+// Function to load the list of existing players
+async function loadPlayersList() {
+    const { data, error } = await supabase
+    .from('players')
+    .select('nom', 'prenom','trainerId');
+    
+    if (error) {
+        console.error('Error loading players list', error);
+        return;
+    }
+    
+    // Store the list of players in the playersList variable
+    playersList = data;
+    console.log(playersList)
+}
+
+// Function to filter suggestions based on user input
+function filterSuggestions(input) {
+    return playersList.filter(player => {
+        const fullName = `${player.nom} ${player.prenom}`;
+        return fullName.toLowerCase().includes(input.toLowerCase());
+    });
+}
+
+// Listen to the input event on the "nom" field
+document.getElementById('nom').addEventListener('input', function () {
+    const input = this.value;
+
+    // Get matching suggestions
+    const suggestions = filterSuggestions(input);
+
+    // Display the suggestions in a dropdown list or a dialog box
+    // You can use a suggestion library like autoComplete.js for this
+    // Example: https://tarekraafat.github.io/autoComplete.js/
+    // Alternatively, you can simply display them below the input field in a div.
+
+    // Example of displaying suggestions in a div
+    const suggestionsDiv = document.getElementById('suggestions');
+    suggestionsDiv.innerHTML = '';
+
+    suggestions.forEach(player => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.textContent = `${player.nom} ${player.prenom}`;
+        suggestionsDiv.appendChild(suggestionItem);
+    });
+});
+
 function updatePlayerTable(players) {
     const tableBody = document.querySelector('#liste-des-joueurs');
-    console.log(tableBody); 
     tableBody.innerHTML = ''; 
 
     players.forEach(player => {
@@ -82,7 +199,7 @@ function updatePlayerTable(players) {
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
             const playerId = this.getAttribute('data-id');
-            deletePlayer(playerId, this); // Pass 'this' correctly as the button element
+            deleteLeaguePlayer(playerId, this); // Pass 'this' correctly as the button element
         });
     });
 
@@ -95,9 +212,9 @@ function updatePlayerTable(players) {
 }
 
 // Define deletePlayer and modifyPlayer functions
-async function deletePlayer(playerId, buttonElement) {
+async function deleteLeaguePlayer(playerId, buttonElement) {
     const { error } = await supabase
-        .from('players')
+        .from('league_players')
         .delete()
         .match({ id: playerId });
 
@@ -121,8 +238,12 @@ function modifyPlayer(playerId) {
     // Here, you would typically populate a form with the player's data for editing.
 }
 
-
 document.addEventListener('DOMContentLoaded', async () => {
+    await loadPlayersList();
+
+    const leaguePlayers = await fetchLeaguePlayer();
     const players = await fetchPlayers();
-    updatePlayerTable(players);
+    console.log(leaguePlayers)
+    console.log(players)
+    updatePlayerTable(leaguePlayers);
 });

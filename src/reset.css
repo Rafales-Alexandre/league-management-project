@@ -1,0 +1,101 @@
+/* Reset CSS */
+
+/* Normalize CSS */
+/* Include a CSS reset and normalize.css for better cross-browser consistency */
+/* All the styles in this file are based on the Eric Meyer reset.css */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+blockquote,
+pre,
+figure,
+hr {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove list styles (bullet points and numbers) */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Remove block margins for nested elements */
+blockquote,
+q {
+    quotes: none;
+    margin: 0;
+}
+
+/* Remove borders and padding from blockquote */
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: '';
+    content: none;
+}
+
+/* Reset heading sizes */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Reset links */
+a {
+    text-decoration: none;
+}
+
+/* Reset form elements */
+button,
+input,
+select,
+textarea {
+    margin: 0;
+}
+
+/* Reset media elements */
+img,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Typography */
+html {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+/* Ensure the cursor is a pointer for clickable elements */
+button,
+a {
+    cursor: pointer;
+}
+
+/* Add more resets as needed */
+
+/* You can add more CSS rules to this file to further customize your reset, depending on your specific needs. */

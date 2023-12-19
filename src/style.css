@@ -1,16 +1,21 @@
+/* Styles pour les liens */
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
+
+/* Styles pour le corps de la page */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #e0e0e0;
 }
 
+/* Styles pour les conteneurs */
 .big-container {
   display: flex;
   gap: 20px;
@@ -19,6 +24,7 @@ body {
 }
 
 .container {
+  position: relative;
   width: 40%;
   background-color: #ffffff;
   padding: 20px;
@@ -26,6 +32,7 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin: 10px;
 }
+
 .liste-container {
   width: 100%;
   background-color: #ffffff;
@@ -34,16 +41,23 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin: 10px;
 }
+
+/* Styles pour les titres */
 .title {
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
 }
-img{
-width: 200px;
+
+/* Styles pour les images */
+img {
+  width: 200px;
 }
-.form-group, .form-actions {
+
+/* Styles pour les formulaires */
+.form-group,
+.form-actions {
   margin-bottom: 20px;
 }
 
@@ -82,26 +96,31 @@ button:hover {
   background-color: #d32f2f; /* Darker red on hover */
 }
 
-.actions button, .form-actions button[type="submit"] {
+.actions button,
+.form-actions button[type="submit"] {
   background-color: #4caf50; /* Pokeball green */
 }
 
-.actions button:hover, .form-actions button[type="submit"]:hover {
+.actions button:hover,
+.form-actions button[type="submit"]:hover {
   background-color: #388e3c; /* Darker green on hover */
 }
 
-/* Table styles */
+/* Styles pour les tableaux */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding: 8px;
 }
@@ -111,12 +130,22 @@ th {
   color: white;
 }
 
-/* Responsive adjustments */
+/* Styles pour les ajustements responsifs */
 @media (max-width: 768px) {
   .big-container {
-      flex-direction: column;
+    flex-direction: column;
   }
-  .container, .liste-container {
-      flex-basis: 100%;
+  .container,
+  .liste-container {
+    flex-basis: 100%;
   }
+}
+
+/* Styles pour les suggestions */
+.suggestions {
+  position: absolute;
+  width: 250px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
 }

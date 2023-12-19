@@ -14,6 +14,7 @@
     <!-- Votre formulaire et autres éléments HTML ici -->
     
     <div class="container">
+        <div id="suggestions"></div>
         <div class="title">
             <img src="./public/pokeball.png" alt="pokeball" srcset="">
             <h2>Inscription</h2>
@@ -21,7 +22,6 @@
         <form id="form-group">
             <label for="nom">Nom:</label>
             <input type="text" id="nom" name="nom" required>
-            <div id="suggestions"></div>
         
         <label for="prenom">Prénom:</label>
         <input type="text" id="prenom" name="prenom" required>
@@ -50,6 +50,7 @@
         
         <div class="form-actions">
             <button type="submit">Ajouter</button>
+            <button type="button" id="clear-button">Clear Input</button>
         </div>
     </form>
 </div>
@@ -156,9 +157,8 @@
 </div>
 </div>
 <!-- Your custom script -->
-<script type="module" src="./src/supabase.js">
+<script type="module" src="./src/main.js">
 </script>
-<script type="module" src="./supabaseConfig.js"></script>
 
 
 
